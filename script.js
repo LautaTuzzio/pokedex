@@ -132,7 +132,7 @@ function renderPokemonCard(pokemon) {
     `;
 }
 
-async function loadNextBatch() {
+async function loadBatch() {
   if (isLoading) return;
 
   if (currentOffset > TOTAL_POKEMON) return;
@@ -321,7 +321,7 @@ document.addEventListener("click", (event) => {
 const observer = new IntersectionObserver(
   (entries) => {
     if (entries[0].isIntersecting) {
-      loadNextBatch();
+      loadBatch();
     }
   },
   {
@@ -331,4 +331,4 @@ const observer = new IntersectionObserver(
 
 observer.observe(document.getElementById("load-trigger"));
 
-loadNextBatch();
+loadBatch();
