@@ -9,7 +9,7 @@
   --border-soft: #e4e7eb;
   --shadow: rgba(0, 0, 0, 0.08);
 }
-body[data-theme="dark"] {
+body[data-theme="light"] {
   --rottom-border: #ff7a59;
   --rottom-body: #151b2d;
   --accent: #70b7ff;
