@@ -1,15 +1,4 @@
 :root {
-  --rottom-border: #e24d32;
-  --rottom-body: #add8e6;
-  --accent: #2f6db3;
-  --text-main: #14213d;
-  --text-soft: #4b5563;
-  --surface: #e8f4f8;
-  --surface-alt: #f5f8ff;
-  --border-soft: #e4e7eb;
-  --shadow: rgba(0, 0, 0, 0.08);
-}
-body[data-theme="light"] {
   --rottom-border: #ff7a59;
   --rottom-body: #151b2d;
   --accent: #70b7ff;
