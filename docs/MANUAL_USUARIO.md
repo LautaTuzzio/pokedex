@@ -74,6 +74,6 @@ Las barras de estadísticas representan visualmente los valores mostrados a la d
 | No aparecen resultados | Borra el texto de búsqueda o prueba con el nombre, número o tipo correcto. |
 | La aplicación no abre correctamente | Ábrela con un navegador actualizado y confirma que los archivos `index.html` y `style.css` permanezcan en la misma carpeta. |
 
-## 10. Fuente de datos
+## 9. Fuente de datos
 
 Los datos e imágenes se consultan en tiempo real desde [PokéAPI](https://pokeapi.co/). Por ese motivo, la disponibilidad y el contenido mostrado dependen de dicho servicio.
