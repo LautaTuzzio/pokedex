@@ -65,16 +65,7 @@ Las barras de estadísticas representan visualmente los valores mostrados a la d
 - Usa **← Anterior** y **Siguiente →** para avanzar entre los Pokémon que estén en el resultado de búsqueda actual. Al llegar al primero o último, la navegación continúa desde el extremo opuesto.
 - Para cerrar la ficha, usa el botón **×**, haz clic fuera de la ventana o presiona la tecla `Esc`.
 
-## 8. Modo oscuro y modo claro
-
-Selecciona el botón de tema en la parte superior:
-
-- **Modo oscuro** activa una interfaz oscura.
-- **Modo claro** restablece la interfaz clara.
-
-La preferencia queda guardada localmente en el navegador. Si borras los datos de navegación, es posible que debas elegirla de nuevo.
-
-## 9. Solución de problemas
+## 8. Solución de problemas
 
 | Situación | Qué hacer |
 | --- | --- |
