@@ -7,7 +7,6 @@ Este proyecto es una Pokédex sencilla desarrollada con HTML, CSS y JavaScript. 
 - Búsqueda de Pokémon en tiempo real.
 - Visualización de una lista de Pokémon cargada desde la PokeAPI.
 - Modal con detalles como descripción, altura, peso y estadísticas.
-- Cambio entre modo claro y oscuro.
 
 ## Cómo usar
 
@@ -20,7 +19,7 @@ Este proyecto es una Pokédex sencilla desarrollada con HTML, CSS y JavaScript. 
 - HTML
 - CSS
 - JavaScript
-- PokeAPI
+- [PokeApi](https://pokeapi.co/)
 
 ## Notas
 
