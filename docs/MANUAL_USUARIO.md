@@ -27,7 +27,6 @@ La pantalla principal contiene los siguientes elementos:
 
 | Elemento | Uso |
 | --- | --- |
-| **Modo oscuro / Modo claro** | Cambia la apariencia de la aplicación. La elección se conserva para las próximas visitas desde el mismo navegador. |
 | **Campo de búsqueda** | Filtra el catálogo mientras escribes. |
 | **Tarjetas de Pokémon** | Muestran el número, imagen, nombre, tipos, altura y peso. Selecciona una para abrir su ficha. |
 
