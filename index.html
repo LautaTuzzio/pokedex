@@ -96,13 +96,6 @@
             return statLabels[name] || capitalize(name);
         }
 
-        function applyTheme(theme) {
-            document.body.dataset.theme = theme;
-            const isDark = theme === 'dark';
-            themeToggle.textContent = isDark ? 'Modo claro' : 'Modo oscuro';
-            localStorage.setItem('pokedex-theme', theme);
-        }
-
         function formatHeight(height) {
             return `${(height / 10).toFixed(1)} m`;
         }
@@ -269,8 +262,6 @@
             }
         });
 
-        const savedTheme = localStorage.getItem('pokedex-theme') || 'light';
-        applyTheme(savedTheme);
         loadPokemons();
     </script>
 </body>
