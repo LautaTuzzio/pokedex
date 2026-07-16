@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokédex</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="rottom">
+    <div class="eye-container">
+      <div class="eye"></div>
+      <div class="eye"></div>
+    </div>
+
+    <div class="content">
+      <div class="topbar">
+        <h1>Buscar en la Pokédex</h1>
+        <div class="topbar-actions">
+          <button id="themeToggle" class="theme-toggle" type="button">🌙 Modo oscuro</button>
+          <label class="search-box" for="pokemonSearch">
+            <span class="search-icon">🔎</span>
+            <input id="pokemonSearch" type="text" placeholder="Busca un Pokémon..." />
+          </label>
+        </div>
+      </div>
+
+      <div class="filters">
+        <select id="typeFilter">
+          <option value="all">Todos los tipos</option>
+        </select>
+      </div>
+
+      <div id="pokemonList" class="pokedex-grid"></div>
+    </div>
+  </div>
+
+  <div id="pokemonModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop" data-close="true"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" type="button" data-close="true" aria-label="Cerrar">×</button>
+      <div id="modalContent" class="modal-content"></div>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    // Consolidated script: loader, render, modal, navigation
+    const API = 'https://pokeapi.co/api/v2/pokemon?limit=151';
+    const $ = id => document.getElementById(id);
+    const s = $('pokemonSearch'), t = $('typeFilter'), list = $('pokemonList'), modal = $('pokemonModal'), mcont = $('modalContent'), themeBtn = $('themeToggle');
+    let all = [], filtered = [], sel = null, abilityCache = {};
+
+    // Fallback: if CSS variables didn't load, ensure a light-blue pokedex background
+    try{
+      const v = getComputedStyle(document.documentElement).getPropertyValue('--rottom-body');
+      if(!v || !v.trim()) document.documentElement.style.setProperty('--rottom-body','#ADD8E6');
+    }catch(e){}
+
+    const TL = {bug:'Bicho',dark:'Siniestro',dragon:'Dragón',electric:'Eléctrico',fairy:'Hada',fighting:'Lucha',fire:'Fuego',flying:'Volador',ghost:'Fantasma',grass:'Planta',ground:'Tierra',ice:'Hielo',normal:'Normal',poison:'Veneno',psychic:'Psíquico',rock:'Roca',steel:'Acero',water:'Agua'};
+    const SL = {hp:'PS',attack:'Ataque',defense:'Defensa','special-attack':'Ataque especial','special-defense':'Defensa especial',speed:'Velocidad'};
+    const idf = i => `#${String(i).padStart(3,'0')}`, cap = v => v.charAt(0).toUpperCase()+v.slice(1), trType = ty => TL[ty]||cap(ty), trStat = nm => SL[nm]||cap(nm);
+    const hFmt = h => `${(h/10).toFixed(1)} m`, wFmt = w => `${(w/10).toFixed(1)} kg`;
+
+    function buildTypes(){ const types=[...new Set(all.flatMap(p=>p.typesRaw))]; t.innerHTML = '<option value="all">Todos los tipos</option>' + types.map(tp=>`<option value="${tp}">${trType(tp)}</option>`).join('') }
+
+    async function load(){
+      list.innerHTML = '<p class="empty-state">Cargando Pokémon (generaciones 1–9)...</p>';
+      try{
+        // Get species from gens 1..9
+        const genIds = [1,2,3,4,5,6,7,8,9];
+        const genPromises = genIds.map(id=>fetch('https://pokeapi.co/api/v2/generation/'+id).then(r=>r.json()));
+        const gens = await Promise.all(genPromises);
+        // collect species with numeric id parsed from species.url
+        let species = gens.flatMap(g=>g.pokemon_species.map(s=>({ name: s.name, url: s.url, id: parseInt(s.url.replace(/\/$/,'').split('/').pop(),10) })));
+        // dedupe by id and sort
+        const seen = new Set();
+        species = species.filter(sp=>{ if(seen.has(sp.id)) return false; seen.add(sp.id); return true }).sort((a,b)=>a.id-b.id);
+
+        all = [];
+        const batchSize = 30; // conservative batch to avoid rate limits
+        for(let i=0;i<species.length;i+=batchSize){
+          const batch = species.slice(i,i+batchSize);
+          list.innerHTML = `<p class="empty-state">Cargando Pokémon ${i+1}–${Math.min(i+batchSize,species.length)} de ${species.length}...</p>`;
+          const details = await Promise.all(batch.map(async sp=>{
+            try{
+              const sd = await fetch(sp.url).then(r=>r.json());
+              const def = sd.varieties.find(v=>v.is_default) || sd.varieties[0];
+              if(def && def.pokemon && def.pokemon.url) return fetch(def.pokemon.url).then(r=>r.json());
+            }catch(e){ return null }
+            return null;
+          }));
+          const mapped = details.map(p=>({ id: idf(p.id), name: cap(p.name), typesRaw: p.types.map(t=>t.type.name), types: p.types.map(t=>trType(t.type.name)).join(' / '), image: p.sprites.other['official-artwork']?.front_default||p.sprites.front_default, height: hFmt(p.height), weight: wFmt(p.weight), stats: p.stats.map(s=>({name:s.stat.name, value: s.base_stat})), speciesUrl: p.species.url }));
+          all = all.concat(mapped.filter(x=>x));
+          buildTypes(); render();
+          // small delay to be polite with API
+          await new Promise(r=>setTimeout(r,150));
+        }
+        // final render
+        buildTypes(); render();
+      }catch(e){ console.error(e); list.innerHTML = '<p class="empty-state">No se pudieron cargar los Pokémon.</p>' }
+    }
+
+    function render(q=''){ q=(q||'').trim().toLowerCase(); const selType = t.value; filtered = all.filter(p=> (selType==='all'||p.typesRaw.includes(selType)) && `${p.id} ${p.name} ${p.types}`.toLowerCase().includes(q)); list.innerHTML=''; if(!filtered.length){ list.innerHTML = '<p class="empty-state">No se encontraron resultados.</p>'; return } const frag = document.createDocumentFragment(); filtered.forEach(p=>{ const b = document.createElement('button'); b.type='button'; b.className='pokemon-card'; b.innerHTML = `<span class="pokemon-id">${p.id}</span><img src="${p.image}" alt="${p.name}" loading="lazy"/><h2>${p.name}</h2><div class="types">${p.types}</div><p>${p.height} · ${p.weight}</p>`; b.addEventListener('click', ()=> openModal(p)); frag.appendChild(b); }); list.appendChild(frag); }
+
+    async function openModal(p){ sel = p; modal.classList.remove('hidden'); modal.setAttribute('aria-hidden','false'); mcont.innerHTML = '<p class="empty-state">Cargando detalles...</p>';
+      try{
+        const res = await fetch(p.speciesUrl), sd = await res.json();
+        const fe = sd.flavor_text_entries.find(e=>e.language.name==='es')||sd.flavor_text_entries.find(e=>e.language.name==='en')||sd.flavor_text_entries[0];
+        const desc = fe? fe.flavor_text.replace(/\f/g,' '): 'No hay descripción disponible.';
+        const ge = sd.genera.find(e=>e.language.name==='es')||sd.genera.find(e=>e.language.name==='en')||sd.genera[0];
+        const genus = ge? ge.genus : '';
+        const mainTypes = p.typesRaw.map(trType).join(' / ');
+        let abilities = [];
+        try{
+          const idNum = parseInt(p.id.replace('#',''),10);
+          if(idNum){ const pd = await fetch('https://pokeapi.co/api/v2/pokemon/'+idNum).then(r=>r.json()); abilities = await Promise.all(pd.abilities.map(async a=>{ try{ const ad = await fetch(a.ability.url).then(r=>r.json()); const nmObj = ad.names.find(n=>n.language.name==='es')||ad.names.find(n=>n.language.name==='en')||null; const nm = nmObj? nmObj.name : cap(a.ability.name.replace(/-/g,' ')); return {name:nm, url:a.ability.url, is_hidden: a.is_hidden}; }catch(e){ return {name: cap(a.ability.name.replace(/-/g,' ')), url: a.ability.url, is_hidden: a.is_hidden}; } })); }
+        }catch(e){}
+
+        mcont.innerHTML = `
+          <div class="modal-visual"><img src="${p.image}" alt="${p.name}"/></div>
+          <div class="modal-info">
+            <p class="modal-id">${p.id}</p>
+            <div class="modal-top">
+              <div class="info-pill">TIPO<br/><small style="opacity:.9">${mainTypes}</small></div>
+              <div class="ability-box">
+                <div class="label">HABILIDADES</div>
+                <div class="ability-list">${abilities.map(a=>`<button class="ability-btn" data-url="${a.url}">${a.name}${a.is_hidden? ' (Oculta)':''}</button>`).join('')}</div>
+                <div id="abilityDesc" class="ability-desc"></div>
+              </div>
+            </div>
+            <h2 id="modalTitle" style="margin:6px 0 6px">${p.name}</h2>
+            <div style="display:flex;gap:12px">
+              <div style="flex:1" class="desc-panel"><div class="modal-genus">${genus}</div><div class="modal-description">${desc}</div></div>
+              <div style="width:240px" class="stat-panel">
+                <div style="font-weight:700;margin-bottom:8px">ESTADÍSTICAS BASE</div>
+                <div class="stat-list">${p.stats.map(s=>`<div class="stat-row"><span>${trStat(s.name)}</span><div class="stat-bar"><div class="stat-fill" style="width:${Math.min(s.value,100)}%"></div></div><strong>${s.value}</strong></div>`).join('')}</div>
+                <div style="text-align:right;margin-top:10px;font-weight:700">TOTAL ${p.stats.reduce((a,b)=>a+b.value,0)}</div>
+              </div>
+            </div>
+            <div class="meta-row"><div class="meta-item">Altura: ${p.height}</div><div class="meta-item">Peso: ${p.weight}</div></div>
+            <div class="bottom-controls">
+              <button class="nav-btn" data-nav="prev">← Anterior</button>
+              <button class="nav-btn" data-nav="next">Siguiente →</button>
+              <div class="big-controls"><div class="control">INFO</div></div>
+            </div>
+          </div>
+        `;
+      }catch(e){ mcont.innerHTML = '<p class="empty-state">No se pudieron cargar los detalles.</p>' }
+    }
+
+    function closeModal(){ modal.classList.add('hidden'); modal.setAttribute('aria-hidden','true'); sel = null }
+
+    function modalNavigate(dir){ const modalIdEl = mcont.querySelector('.modal-id'); const curId = modalIdEl? modalIdEl.textContent.replace('#','') : null; if(!curId) return; const cards = Array.from(document.querySelectorAll('.pokemon-card')); let i = cards.findIndex(c=>{ const idc = c.querySelector('.pokemon-id'); return idc && idc.textContent.replace('#','')===curId }); if(i===-1) return; let ni = dir==='next'?i+1:i-1; if(ni<0) ni=0; if(ni>=cards.length) ni=cards.length-1; cards[ni].click(); }
+
+    document.addEventListener('click', function(ev){
+      const ab = ev.target.closest('.ability-btn');
+      if(ab){ const url = ab.dataset.url; const descEl = document.getElementById('abilityDesc'); if(!url) return; (async ()=>{ if(abilityCache[url]){ descEl.innerHTML = abilityCache[url]; return } try{ const a = await fetch(url).then(r=>r.json()); const fe = a.effect_entries.find(e=>e.language.name==='es')||a.effect_entries.find(e=>e.language.name==='en')||a.effect_entries[0]; const txt = fe?(fe.short_effect||fe.effect):'Descripción no disponible.'; const nmObj = a.names.find(n=>n.language.name==='es')||a.names.find(n=>n.language.name==='en')||a.names[0]; const nm = nmObj? nmObj.name : a.name; const html = `<div class="ability-name">${nm}</div><div class="ability-text">${txt}</div>`; abilityCache[url] = html; descEl.innerHTML = html }catch(err){ descEl.innerHTML = '<div class="ability-text">No se pudo cargar la habilidad.</div>' } })(); return }
+
+      const nav = ev.target.closest('[data-nav]'); if(nav){ modalNavigate(nav.dataset.nav); return }
+      const close = ev.target.closest('[data-close]'); if(close){ closeModal(); return }
+    });
+
+    s.addEventListener('input', e=>render(e.target.value)); t.addEventListener('change', ()=>render(s.value)); document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal() });
+
+    // Theme handling
+    function applyTheme(th){
+      if(th === 'dark'){ document.body.setAttribute('data-theme','dark'); themeBtn.textContent = '☀️ Modo claro'; }
+      else { document.body.removeAttribute('data-theme'); themeBtn.textContent = '🌙 Modo oscuro'; }
+      try{ localStorage.setItem('pokedex-theme', th); }catch(e){}
+    }
+    // initialize theme from storage or system pref
+    try{
+      const saved = localStorage.getItem('pokedex-theme');
+      const pref = (!saved && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : (saved || 'light');
+      applyTheme(pref);
+    }catch(e){ applyTheme('light') }
+    themeBtn.addEventListener('click', ()=>{ const cur = document.body.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'; applyTheme(cur === 'dark' ? 'light' : 'dark'); });
+
+    load();
+  })();
+  </script>
+</body>
+</html>
