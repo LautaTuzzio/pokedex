@@ -27,7 +27,6 @@ La pantalla principal contiene los siguientes elementos:
 
 | Elemento | Uso |
 | --- | --- |
-| **Modo oscuro / Modo claro** | Cambia la apariencia de la aplicación. La elección se conserva para las próximas visitas desde el mismo navegador. |
 | **Campo de búsqueda** | Filtra el catálogo mientras escribes. |
 | **Tarjetas de Pokémon** | Muestran el número, imagen, nombre, tipos, altura y peso. Selecciona una para abrir su ficha. |
 
@@ -66,16 +65,7 @@ Las barras de estadísticas representan visualmente los valores mostrados a la d
 - Usa **← Anterior** y **Siguiente →** para avanzar entre los Pokémon que estén en el resultado de búsqueda actual. Al llegar al primero o último, la navegación continúa desde el extremo opuesto.
 - Para cerrar la ficha, usa el botón **×**, haz clic fuera de la ventana o presiona la tecla `Esc`.
 
-## 8. Modo oscuro y modo claro
-
-Selecciona el botón de tema en la parte superior:
-
-- **Modo oscuro** activa una interfaz oscura.
-- **Modo claro** restablece la interfaz clara.
-
-La preferencia queda guardada localmente en el navegador. Si borras los datos de navegación, es posible que debas elegirla de nuevo.
-
-## 9. Solución de problemas
+## 8. Solución de problemas
 
 | Situación | Qué hacer |
 | --- | --- |
@@ -84,6 +74,6 @@ La preferencia queda guardada localmente en el navegador. Si borras los datos de
 | No aparecen resultados | Borra el texto de búsqueda o prueba con el nombre, número o tipo correcto. |
 | La aplicación no abre correctamente | Ábrela con un navegador actualizado y confirma que los archivos `index.html` y `style.css` permanezcan en la misma carpeta. |
 
-## 10. Fuente de datos
+## 9. Fuente de datos
 
 Los datos e imágenes se consultan en tiempo real desde [PokéAPI](https://pokeapi.co/). Por ese motivo, la disponibilidad y el contenido mostrado dependen de dicho servicio.
