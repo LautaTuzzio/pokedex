@@ -1,26 +1,22 @@
 # Pokédex
 
-Este proyecto es una Pokédex sencilla desarrollada con HTML, CSS y JavaScript. Permite explorar Pokémon, buscar por nombre o número, y ver información detallada de cada uno mediante una interfaz visual y amigable.
+Aplicación web para explorar información de Pokémon mediante la [PokéAPI](https://pokeapi.co/).
 
-## Características
+## Manual de usuario
 
-- Búsqueda de Pokémon en tiempo real.
-- Visualización de una lista de Pokémon cargada desde la PokeAPI.
-- Modal con detalles como descripción, altura, peso y estadísticas.
+Consulta el [Manual de usuario](docs/MANUAL_USUARIO.md) para conocer los requisitos, las funciones disponibles y la solución de problemas.
 
-## Cómo usar
+## Inicio rápido
 
-1. Abre el archivo `index.html` en tu navegador.
-2. Escribe el nombre o número de un Pokémon en la barra de búsqueda.
-3. Haz clic en una tarjeta para ver más información.
+1. Abre `index.html` en un navegador moderno.
+2. Espera a que se cargue el catálogo.
+3. Busca un Pokémon y selecciona su tarjeta para abrir su ficha.
 
-## Tecnologías utilizadas
+La aplicación necesita conexión a Internet para obtener los datos e imágenes desde PokéAPI.
+
+## Tecnologías
 
 - HTML
 - CSS
 - JavaScript
-- [PokeApi](https://pokeapi.co/)
-
-## Notas
-
-No requiere instalación adicional. Solo necesitas un navegador moderno para ejecutarlo.
+- [PokéAPI](https://pokeapi.co/)
