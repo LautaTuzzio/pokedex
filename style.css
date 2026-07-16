@@ -1,0 +1,652 @@
+:root {
+  --rottom-border: #e24d32;
+  --rottom-body: #add8e6;
+  --accent: #2f6db3;
+  --text-main: #14213d;
+  --text-soft: #4b5563;
+  --surface: #e8f4f8;
+  --surface-alt: #f5f8ff;
+  --border-soft: #e4e7eb;
+  --shadow: rgba(0, 0, 0, 0.08);
+}
+body[data-theme="dark"] {
+  --rottom-border: #ff7a59;
+  --rottom-body: #151b2d;
+  --accent: #70b7ff;
+  --text-main: #f8fafc;
+  --text-soft: #d1d5db;
+  --surface: #1f2937;
+  --surface-alt: #111827;
+  --border-soft: #374151;
+  --shadow: rgba(0, 0, 0, 0.35);
+}
+
+.modal-card {
+  background: linear-gradient(180deg, #0f4c75 0%, #1b6ca8 100%) !important;
+  color: #eef6ff !important;
+  border-radius: 18px !important;
+  padding: 18px !important;
+  box-shadow: 0 30px 60px rgba(3, 10, 30, 0.6) !important;
+  overflow: visible;
+}
+.modal-card .modal-content {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 20px;
+  align-items: start;
+  padding: 12px;
+  background: transparent;
+}
+.modal-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-visual img {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+  border-radius: 50%;
+  padding: 18px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.02)
+  );
+  border: 6px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 18px 40px rgba(3, 10, 30, 0.45);
+}
+.modal-info {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.02)
+  );
+  border-radius: 12px;
+  padding: 14px;
+}
+.modal-id {
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.modal-genus {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.modal-description {
+  margin: 10px 0 16px;
+  line-height: 1.5;
+  color: rgba(235, 245, 255, 0.95);
+}
+.stat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.stat-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 40px;
+  align-items: center;
+  gap: 10px;
+  color: rgba(230, 245, 255, 0.9);
+}
+.stat-row span {
+  font-size: 0.95rem;
+}
+.stat-bar {
+  height: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.stat-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6dd3ff, #2f9fff);
+  border-radius: inherit;
+}
+.stat-row strong {
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 700;
+}
+.modal-top {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.info-pill {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 700;
+  margin-right: 8px;
+}
+.ability-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ability-box .label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+.ability-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.ability-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.95);
+  cursor: pointer;
+  font-weight: 700;
+}
+.ability-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.ability-desc {
+  margin-top: 6px;
+  padding: 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  color: rgba(235, 245, 255, 0.95);
+  font-size: 0.95rem;
+}
+.desc-panel {
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(235, 245, 255, 0.95);
+  min-height: 120px;
+}
+.stat-panel {
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(3, 9, 30, 0.25);
+  color: rgba(235, 245, 255, 0.95);
+}
+.meta-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.meta-item {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: rgba(235, 245, 255, 0.9);
+  font-weight: 700;
+}
+.bottom-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+.nav-btn {
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.95);
+  cursor: pointer;
+  font-weight: 700;
+}
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.09);
+}
+.big-controls {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}
+.big-controls .control {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.02)
+  );
+  padding: 10px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 700;
+  cursor: pointer;
+}
+@media (max-width: 640px) {
+  .modal-card .modal-content {
+    grid-template-columns: 1fr;
+  }
+  .modal-visual img {
+    width: 180px;
+    height: 180px;
+  }
+  .ability-list {
+    justify-content: flex-start;
+  }
+}
+
+/* Card text overflow fixes and inline nav buttons */
+.pokemon-card {
+  position: relative;
+  overflow: hidden;
+}
+.pokemon-card h2 {
+  font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 6px;
+}
+.pokemon-card .types {
+  font-size: clamp(0.78rem, 1.2vw, 0.95rem);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pokemon-card p {
+  font-size: 0.82rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card-nav {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 6px;
+  z-index: 3;
+}
+.card-nav button {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  color: var(--text-main);
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.card-nav button:hover {
+  transform: translateY(-1px);
+}
+
+.rottom {
+  border: 10px solid #e24d32 !important;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100dvh;
+}
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 24px 24px 48px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text-main);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+  overflow-x: hidden;
+  background: linear-gradient(90deg, #9ebd13 0%, #008552 100%);
+
+}
+.rottom {
+  position: relative;
+  width: min(60dvw, 95vw);
+  min-height: 80vh;
+  background-color: var(--rottom-body);
+  border: 10px solid var(--rottom-border);
+  border-radius: 16px;
+  padding: 40px 24px 24px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+}
+
+.rottom::before,
+.rottom::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 10%;
+  height: 33%;
+  background: linear-gradient(
+    180deg,
+    rgba(155, 232, 255, 0.06),
+    rgba(255, 255, 255, 0.02)
+  );
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.rottom::before {
+  left: 30%;
+  transform: translateY(-11vh) rotate(-20deg);
+}
+
+.rottom::after {
+  right: 30%;
+  transform: translateY(-11vh) rotate(20deg);
+}
+
+.eye-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 80px;
+  z-index: 2;
+}
+
+.eye {
+  width: 54px;
+  height: 54px;
+  border: 2px solid #111;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 35%,
+    #fff 0 8%,
+    #9be8ff 14%,
+    #2d79b9 100%
+  );
+  box-shadow: inset 0 0 0 4px #f5f5f5;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.topbar h1 {
+  font-size: 2rem;
+  color: var(--text-main);
+}
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.theme-toggle,
+.search-box,
+.modal-nav-button {
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+  color: var(--text-main);
+  box-shadow: 0 6px 16px var(--shadow);
+}
+.theme-toggle {
+  padding: 10px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  display: none;
+}
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: min(100%, 420px);
+  padding: 10px 14px;
+  border-radius: 999px;
+}
+.search-box input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 1rem;
+  background: transparent;
+  color: var(--text-main);
+}
+.search-icon {
+  font-size: 1rem;
+  opacity: 0.7;
+}
+.filters {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+.filters select {
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+  color: var(--text-main);
+  box-shadow: 0 6px 16px var(--shadow);
+}
+.pokedex-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 16px;
+  min-height: 280px;
+  align-content: start;
+}
+.pokemon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  min-height: 240px;
+  background: linear-gradient(
+    135deg,
+    var(--surface) 0%,
+    var(--surface-alt) 100%
+  );
+  border: 2px solid var(--border-soft);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 8px 20px var(--shadow);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  cursor: pointer;
+  appearance: none;
+  color: #fff;
+  font: inherit;
+}
+.pokemon-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+.pokemon-card img {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  margin: 8px 0;
+}
+.pokemon-id {
+  display: inline-block;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.pokemon-card h2 {
+  font-size: 1.1rem;
+  color: #fff;
+  margin-bottom: 6px;
+  text-transform: capitalize;
+}
+.types {
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  text-transform: capitalize;
+}
+.pokemon-card p {
+  color: #fff;
+  font-size: 0.9rem;
+}
+.empty-state {
+  grid-column: 1 / 1;
+  text-align: center;
+  color: var(--text-soft);
+  padding: 20px;
+}
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 10;
+}
+.modal.hidden {
+  display: none;
+}
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.7);
+}
+.modal-card {
+  position: relative;
+  width: min(860px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--surface);
+  color: var(--text-main);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  transform: translateY(0);
+  opacity: 1;
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+.modal.hidden .modal-card {
+  transform: translateY(10px);
+  opacity: 0;
+}
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  background: var(--surface-alt);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: var(--text-main);
+}
+.modal-content {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) 1fr;
+  gap: 24px;
+  align-items: center;
+}
+.modal-visual img {
+  width: 100%;
+  max-width: 260px;
+  display: block;
+  margin: 0 auto;
+}
+.modal-id {
+  color: #6b7280;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.modal-genus {
+  color: var(--text-soft);
+  font-style: italic;
+  margin-bottom: 8px;
+}
+.modal-description {
+  margin: 12px 0 16px;
+  line-height: 1.5;
+  color: var(--text-soft);
+}
+.stat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.stat-row {
+  display: grid;
+  grid-template-columns: 90px 1fr 36px;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-soft);
+}
+.stat-bar {
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.stat-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2f6db3, #5ab5ff);
+  border-radius: inherit;
+}
+.modal-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 18px;
+}
+.modal-nav-button {
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+@media (max-width: 640px) {
+  body {
+    padding: 12px;
+  }
+  .rottom {
+    padding: 54px 16px 16px;
+  }
+  .topbar {
+    align-items: flex-start;
+  }
+  .topbar-actions {
+    width: 100%;
+  }
+  .search-box {
+    width: 100%;
+  }
+  .modal-content {
+    grid-template-columns: 1fr;
+  }
+  .stat-row {
+    grid-template-columns: 1fr;
+  }
+}
