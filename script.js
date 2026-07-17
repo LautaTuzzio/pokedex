@@ -3,7 +3,6 @@
         const pokemonList = document.getElementById('pokemonList');
         const pokemonModal = document.getElementById('pokemonModal');
         const modalContent = document.getElementById('modalContent');
-        const themeToggle = document.getElementById('themeToggle');
 
         let allPokemons = [];
         let filteredPokemons = [];
