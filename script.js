@@ -318,17 +318,4 @@ document.addEventListener("click", (event) => {
   showPokemonDetails(button.dataset.id);
 });
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    if (entries[0].isIntersecting) {
-      loadBatch();
-    }
-  },
-  {
-    rootMargin: "600px",
-  },
-);
-
-observer.observe(document.getElementById("load-trigger"));
-
 loadBatch();
