@@ -241,11 +241,6 @@
             renderPokemons(event.target.value);
         });
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
-            applyTheme(currentTheme);
-        });
-
         pokemonModal.addEventListener('click', (event) => {
             if (event.target.matches('[data-close="true"]')) {
                 closeModal();
