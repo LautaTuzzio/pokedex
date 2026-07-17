@@ -67,8 +67,9 @@ async function fetchPokemonDetails(id) {
     `https://pokeapi.co/api/v2/pokemon-species/${id}`,
   );
 
-  const description =
-    species.flavor_text_entries.find((entry) => entry.language.name === "es")
+  const description = species.flavor_text_entries.find(
+    (entry) => entry.language.name === "es",
+  );
 
   return {
     id: pokemon.id,
@@ -121,12 +122,6 @@ function renderPokemonCard(pokemon) {
 
             </div>
 
-            <button
-                class="details-button"
-                data-id="${pokemon.id}"
-            >
-                Ver detalles
-            </button>
 
         </article>
     `;
